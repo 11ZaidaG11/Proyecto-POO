@@ -7,6 +7,6 @@ Ideas
 - ¿Modo juego? Te muestra como debe terminar la figura y tu la replicas. 
 
 Tareas
-- Como se programa en GCODE
+- Como se programa en GCODE.
 - Equivalentes en lenguaje natural de GCODE.
 - Como mostrar figuras en GUI (Pygame, tkinter...?) y en donde es más facil hacer el proyecto.
