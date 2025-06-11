@@ -1,5 +1,5 @@
 # Proyecto-POO
-Simulador de CNC 2D
+Simulador de CNC 2D  
 Ideas  
 - Usuario ingresa en lenguaje natural como quiere modificar la lamina.
 - El programa regresa el input del usuario en GCODE.
