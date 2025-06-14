@@ -1,4 +1,9 @@
 # Proyecto-POO
+### The Powerpuff Coders
+Zaida Alejandra Guzmán Martínez  
+Katherine Restrepo Rodríguez  
+Andrea Alejandra Suárez Cuervo  
+
 Simulador de CNC 2D  
 Ideas  
 - Usuario ingresa en lenguaje natural como quiere modificar la lamina.
