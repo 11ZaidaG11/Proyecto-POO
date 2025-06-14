@@ -1,8 +1,9 @@
-# Proyecto-POO
+# Simulador de CNC 2D
 ### The Powerpuff Coders
-Zaida Alejandra Guzmán Martínez  
-Katherine Restrepo Rodríguez  
-Andrea Alejandra Suárez Cuervo  
+Integrantes:  
+- Andrea Alejandra Suárez Cuervo  
+- Katherine Restrepo Rodríguez  
+- Zaida Alejandra Guzmán Martínez  
 
 Simulador de CNC 2D  
 Ideas  
