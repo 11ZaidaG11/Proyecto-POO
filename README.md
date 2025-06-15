@@ -37,6 +37,7 @@ Cada línea de G-Code representa una orden específica y el conjunto de estas en
 | G02 | `G02 X10 Y7 I0 J-5` | Interpolación circular en sentido horario (Corte). | Arco horario, centro | Arco horario hasta: 10, 7; Centro: 0, -5.  |
 | G03 | `G02 X4 Y9 I-10 J3` | Interpolación circular en sentido antihorario (Corte). | Arco antihorario, centro | Arco antihorario hasta: 4, 9; Centro: 0, -5.  |  
 
-Para G02, G03 las coordenadas I(eje x) y J(eje y) indican la posición del centro de la interpolación circular, estas no se toman se toman con referencia al punto en el que se encuentre la herramienta de corte. Como el programa pretende facilitar I, J se recibirán con respecto al origen así como todas las demás coordenadas.  
+Para G02, G03 las coordenadas I(eje x) y J(eje y) indican la posición del centro de la interpolación circular, estas son relativas al punto en el que se encuentre la herramienta de corte que se comporta como un nuevo (0, 0). Como el programa pretende facilitar la experiencia de usuario I, J se recibirán con respecto al origen así como todas las demás coordenadas.
 
+### Interfaz gráfica de usuario (GUI)
 Decidimos utilizar la biblioteca estandar de interfaces graficas de pyhton, Tkinter, para relizar la interfaz grafica del simulador, ya que esta nos permite representar movimientos lineales y cicurlares, para esto se pretende utilizar `canvas.create_line()` y `canvas.create_arc()`
