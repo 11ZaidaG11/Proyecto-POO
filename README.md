@@ -31,6 +31,6 @@ Para G02, G03 las coordenadas I(eje x) y J(eje y) indican la posición del centr
 Decidimos utilizar la biblioteca estandar de interfaces graficas de pyhton, Tkinter, para relizar la interfaz grafica del simulador, ya que esta nos permite representar movimientos lineales y cicurlares, para esto se pretende utilizar `canvas.create_line(x1, y1, x2, y2, fill="color")` y `canvas.create_arc(x0, y0, x1, y1,)`
 Decidimos utilizar la biblioteca estandar de interfaces graficas de pyhton, Tkinter, para relizar la interfaz grafica del simulador, ya que esta nos permite representar movimientos lineales y cicurlares, para esto se pretende utilizar `canvas.create_line(x1, y1, x2, y2, fill="color")` y `canvas.create_arc(x0, y0, x1, y1,start=n,extent=n,style=tk.ARC)`
 
-En el caso de `canvas.create_line()`, el tercer y cuarto argumento (x2 y y2) en G-code corresponden a x y y ya que son las coordenadas finales.
+En el caso de `canvas.create_line()`, el tercer y cuarto argumento (x2 y y2) en G-code corresponden a X e Y ya que son las coordenadas finales.
 
-Por otro lado, en el caso de `canvas.create_arc()`, los primeros cuatro argumentos (x0, y0, x1, y1) representan las esquinas opuestas del rectangulo que delimita la elipse o circulo de donde se extrae el arco, en G-code x y y darian el punto final del arco e I y J se utilizarian para calcular el centro.
+Por otro lado, en el caso de `canvas.create_arc()`, los primeros cuatro argumentos (x0, y0, x1, y1) representan las esquinas opuestas del rectangulo que delimita la elipse o circulo de donde se extrae el arco, en G-code X e Y darian el punto final del arco e I y J se utilizarian para calcular el centro.
