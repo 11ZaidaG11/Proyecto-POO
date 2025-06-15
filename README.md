@@ -29,8 +29,7 @@ Para G02, G03 las coordenadas I(eje x) y J(eje y) indican la posición del centr
 
 ### Interfaz gráfica de usuario (GUI)
 Decidimos utilizar la biblioteca estandar de interfaces graficas de pyhton, Tkinter, para relizar la interfaz grafica del simulador.  
-Interpolación lineal: `canvas.create_line()` 
-Interpolación circular:  `canvas.create_arc()`
-
-En el caso de `canvas.create_line(x1, y1, x2, y2, fill="color")`, el tercer y cuarto argumento x2, y2 en G-code corresponden a X, Y respectivamente ya que son la coordenada de posición final.
-Por otro lado, en el caso de `canvas.create_arc(x0, y0, x1, y1,start=n,extent=n,style=tk.ARC)`, los primeros cuatro argumentos x0, y0, x1, y1 representan las esquinas opuestas del rectangulo que delimita la elipse o circulo de donde se extrae el arco, en G-code X e Y darian el punto final del arco e I y J se utilizarian para calcular el centro.
+- Interpolación lineal: `canvas.create_line(x1, y1, x2, y2, fill="color")`
+El tercer y cuarto argumento x2, y2 en G-code corresponden a X, Y respectivamente ya que son la coordenada de posición final.  
+- Interpolación circular: `canvas.create_arc(x0, y0, x1, y1,start=n,extent=n,style=tk.ARC)`  
+los primeros cuatro argumentos x0, y0, x1, y1 representan las esquinas opuestas del rectangulo que delimita la elipse o circulo de donde se extrae el arco, en G-code X e Y darian el punto final del arco e I y J se utilizarian para calcular el centro.  
