@@ -29,3 +29,10 @@ Para que la máquina entienda qué acción debe ejecutar, se utiliza un lenguaje
 Cada línea de G-Code representa una orden específica y el conjunto de estas en un programa permite que la máquina realice el proceso completo de fabricación de una pieza. 
 
 ### ¿Qué hace el proyecto?
+### G-code a lenguaje natural
+| Comando | Ejemplo | Significado | Palabra natural |  |
+| --- | --- | --- | --- | --- |
+| G00 | `G00 X5 Y12` | Posicionamiento rápido: Ubicar herramienta, sin corte. | Ubicar | Ubicar en 5, 12 |
+| G01 | `G01 X6 Y8 Z-1`   | Interpolación lineal: Corte de material en línea recta. | Línea recta | Línea recta hasta 6, 8 |
+| G02 | `G02 X10 Y7 I0 J-5` | Interpolación circular en sentido horario | Arco horario, centro | Arco horario hasta 10, 7 respecto 0, -5  |
+| G03 | `G02 X4 Y9 I-10 J3` | Interpolación circular en sentido antihorario | Arco antihorario, centro | Arco antihorario hasta 4, 9 centro 0, -5  |
