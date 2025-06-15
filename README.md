@@ -3,23 +3,11 @@
 ![Logo del proyecto](Logo.jpg)
 
 
-Integrantes:  
+### Integrantes:  
 - Andrea Alejandra Suárez Cuervo  
 - Katherine Restrepo Rodríguez  
 - Zaida Alejandra Guzmán Martínez  
 
-Simulador de CNC 2D  
-Ideas  
-- Usuario ingresa en lenguaje natural como quiere modificar la lamina.
-- El programa regresa el input del usuario en GCODE.
-- En pantalla se ve como queda la lamina modificada.
-- ¿Modo juego? Te muestra como debe terminar la figura y tu la replicas. 
-
-Tareas
-- Como se programa en GCODE.
-- Equivalentes en lenguaje natural de GCODE.
-- Como mostrar figuras en GUI (Pygame, tkinter...?) y en donde es más facil hacer el proyecto.
-  
 ### Contextualización
 Para comprender a cabalidad el proyecto es necesario conocer de antemano que es y para que se usa el CNC y el G-CODE.
 
