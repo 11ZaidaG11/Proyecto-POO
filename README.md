@@ -1,6 +1,7 @@
 # Simulador de CNC 2D
 ### The Powerpuff Coders
-![Logo](Logo.png)
+![Logo del proyecto](Logo.jpg)
+
 
 Integrantes:  
 - Andrea Alejandra Suárez Cuervo  
