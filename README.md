@@ -36,4 +36,4 @@ Cada línea de G-Code representa una orden específica y el conjunto de estas en
 | G02 | `G02 X10 Y7 I0 J-5` | Interpolación circular en sentido horario | Arco horario, centro | Arco horario hasta: 10, 7 centro: 0, -5  |
 | G03 | `G02 X4 Y9 I-10 J3` | Interpolación circular en sentido antihorario | Arco antihorario, centro | Arco antihorario hasta: 4, 9 centro: -10, 3  |
 
-Decidimos utilizar la biblioteca estandar de interfaces graficas de pyhton, Tkinter, para relizar la interfaz grafica del simulador, ya que esta nos permite representar movimientos lineales y cicurlares, para esto se pretende utilizar canvas.create_line() y canvas.create_arc()
+Decidimos utilizar la biblioteca estandar de interfaces graficas de pyhton, Tkinter, para relizar la interfaz grafica del simulador, ya que esta nos permite representar movimientos lineales y cicurlares, para esto se pretende utilizar `canvas.create_line()` y `canvas.create_arc()`
