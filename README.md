@@ -2,7 +2,6 @@
 ### The Powerpuff Coders
 ![Logo del proyecto](Logo.jpg)
 
-
 ### Integrantes:  
 - Andrea Alejandra Suárez Cuervo  
 - Katherine Restrepo Rodríguez  
@@ -16,11 +15,8 @@ El CNC (Control Numérico por Computadora) es un sistema que permite controlar c
 Para que la máquina entienda qué acción debe ejecutar, se utiliza un lenguaje de programación llamado G-Code. Este lenguaje está compuesto por una serie de instrucciones estructuradas, está compuesto por comandos G (de movimiento) y comandos M (de funciones auxiliares). Estas acciones pueden incluir desplazamientos, cortes, perforaciones, entre otros.
 Cada línea de G-Code representa una orden específica y el conjunto de estas en un programa permite que la máquina realice el proceso completo de fabricación de una pieza. 
 
-### ¿Qué hace el proyecto?
-![](1.jpg)
-![](2.jpg)
+## ¿Qué hace el proyecto?
 ![](3.jpg)
-
 
 ### G-code a lenguaje natural
 | **Comando** | **Ejemplo** | **Significado** | **Palabra natural** | **Ejemplo** |
@@ -33,8 +29,9 @@ Cada línea de G-Code representa una orden específica y el conjunto de estas en
 Para G02, G03 las coordenadas I(eje x) y J(eje y) indican la posición del centro de la interpolación circular, estas son relativas al punto en el que se encuentre la herramienta de corte que se comporta como un nuevo (0, 0). Como el programa pretende facilitar la experiencia de usuario I, J se recibirán con respecto al origen así como todas las demás coordenadas.
 
 ### Interfaz gráfica de usuario (GUI)
-
 Decidimos utilizar la biblioteca estandar de interfaces graficas de pyhton, Tkinter, para relizar la interfaz grafica del simulador.  
+![](1.jpg)
+
 - **Interpolación lineal:** `canvas.create_line(x1, y1, x2, y2, fill="color")`  
 El tercer y cuarto argumento x2, y2 en G-code corresponden a X, Y respectivamente ya que son la coordenada de posición final.  
 - **Interpolación circular:** `canvas.create_arc(x0, y0, x1, y1,start=n,extent=n,style=tk.ARC)`  
@@ -44,19 +41,21 @@ import tkinter as tk
 import math
 
 def gcode_a_createarc(x_inicial, y_inicial, x_final, y_final, i, j, sentido_horario=True):
-    #calcular el centro del circulo o elipse
+    # Centro del circulo
     cx=x_inicial+i
     cy=y_inicial+j
     radio=math.hypot(i,j)
 
-    #se calculan los vertices del rectangulo
+    # Vertices del rectangulo
     x0 = cx - radio
     y0 = cy - radio
     x1 = cx + radio
     y1 = cy + radio
-    #se calcula el angulo que hay entre el eje x y el vector que va del centro al inicio del arco
+
+    # Angulo que hay entre el eje x y el vector que va del centro al inicio del arco
     angulo_inicial = math.degrees(math.atan2(y_inicial - cy, x_inicial - cx)) % 360
-    #se calcula el angulo que hay entre el eje x y el vector que va del centro al final del arco
+
+    # Angulo que hay entre el eje x y el vector que va del centro al final del arco
     angulo_final = math.degrees(math.atan2(y_final - cy, x_final - cx)) % 360
     
     if sentido_horario:
