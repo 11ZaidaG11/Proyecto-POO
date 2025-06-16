@@ -57,7 +57,7 @@ def gcode_a_createarc(x_inicial, y_inicial, x_final, y_final, i, j, sentido_hora
         extent = (angulo_inicial - angulo_final) % 360
         extent = -extent  # sentido horario
     else:
-        extent = (angulo_inicial - angulo_final) % 360
+        extent = (angulo_final - angulo_inicial) % 360
     return {
         "x0": x0,
         "y0": y0,
