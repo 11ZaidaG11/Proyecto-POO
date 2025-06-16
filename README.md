@@ -74,7 +74,7 @@ def gcode_a_createarc(x_inicial, y_inicial, x_final, y_final, i, j, sentido_hora
 
 ```
   
-## Presentación del Diagrama de Clases
+## Diagrama de Clases
 
 ```mermaid
 ---
@@ -111,12 +111,12 @@ direction TB
 	    - work_area: WorkArea
 	    - tool: CutterTool
 	    + start()
-	    + activate_tool()
 	    + stop()
-	    + deactivate_tool()
     }
     class CutterTool {
 	    + apply(sheet: Sheet, gcode: GCodeFile) : ModifiedSheet
+	    + activate_tool()
+	    + deactivate_tool()
     }
 
     Sheet <|-- ModifiedSheet
