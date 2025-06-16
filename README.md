@@ -49,21 +49,21 @@ def gcode_a_createarc(x_inicial, y_inicial, x_final, y_final, i, j, sentido_hora
     x1 = cx + radio
     y1 = cy + radio
     #se calcula el angulo que hay entre el eje x y el vector que va del centro al inicio del arco
-    angle_start = math.degrees(math.atan2(y_inicial - cy, x_inicial - cx)) % 360
+    angulo_inicial = math.degrees(math.atan2(y_inicial - cy, x_inicial - cx)) % 360
     #se calcula el angulo que hay entre el eje x y el vector que va del centro al final del arco
-    angle_end = math.degrees(math.atan2(y_final - cy, x_final - cx)) % 360
+    angulo_final = math.degrees(math.atan2(y_final - cy, x_final - cx)) % 360
     
     if sentido_horario:
-        extent = (angle_start - angle_end) % 360
+        extent = (angulo_inicial - angulo_final) % 360
         extent = -extent  # sentido horario
     else:
-        extent = (angle_end - angle_start) % 360
+        extent = (angulo_inicial - angulo_final) % 360
     return {
-        "x0": bbox_x0,
-        "y0": bbox_y0,
-        "x1": bbox_x1,
-        "y1": bbox_y1,
-        "start": angle_start,
+        "x0": x0,
+        "y0": y0,
+        "x1": x1,
+        "y1": y1,
+        "start": angulo_inicial,
         "extent": extent
     }
 
