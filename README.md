@@ -74,3 +74,58 @@ def gcode_a_createarc(x_inicial, y_inicial, x_final, y_final, i, j, sentido_hora
 
 ```
   
+## Presentación del Diagrama de Clases
+
+```mermaid
+---
+config:
+  theme: default
+  look: handDrawn
+  layout: dagre
+title: Simulador de CNC
+---
+classDiagram
+direction TB
+    class WorkArea {
+	    - size: tuple[float, float, float]
+    }
+    class Sheet {
+	    - material: str
+	    - size: list[float, float, float]
+	    + is_fit(area: Workarea) : bool
+    }
+    class NaturalFile {
+	    - name: str
+    }
+    class Translator {
+	    - dictionary: dict[natural_word: 'G-code']
+	    + translate(naturalfile: NaturalFile) : GcodeFile
+    }
+    class GCodeFile {
+	    - name: str
+    }
+    class ModifiedSheet {
+    }
+    class CNCMachine {
+	    - name: str
+	    - work_area: WorkArea
+	    - tool: CutterTool
+	    + start()
+	    + activate_tool()
+	    + stop()
+	    + deactivate_tool()
+    }
+    class CutterTool {
+	    + apply(sheet: Sheet, gcode: GCodeFile) : ModifiedSheet
+    }
+
+    Sheet <|-- ModifiedSheet
+    CNCMachine --> WorkArea
+    CNCMachine --> CutterTool
+    Translator --> GCodeFile
+    Translator --> NaturalFile
+    CNCMachine --> Translator
+    CutterTool --> Sheet
+    CutterTool --> ModifiedSheet
+    CutterTool ..> GCodeFile : needs
+```
