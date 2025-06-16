@@ -32,4 +32,40 @@ Decidimos utilizar la biblioteca estandar de interfaces graficas de pyhton, Tkin
 - **Interpolación lineal:** `canvas.create_line(x1, y1, x2, y2, fill="color")`  
 El tercer y cuarto argumento x2, y2 en G-code corresponden a X, Y respectivamente ya que son la coordenada de posición final.  
 - **Interpolación circular:** `canvas.create_arc(x0, y0, x1, y1,start=n,extent=n,style=tk.ARC)`  
-los primeros cuatro argumentos x0, y0, x1, y1 representan las esquinas opuestas del rectangulo que delimita la elipse o circulo de donde se extrae el arco, en G-code X e Y darian el punto final del arco e I y J se utilizarian para calcular el centro.  
+los primeros cuatro argumentos x0, y0, x1, y1 representan las esquinas opuestas del rectangulo que delimita la elipse o circulo de donde se extrae el arco, en G-code X e Y darian el punto final del arco e I y J se utilizarian para calcular el centro. Como se muestra en la siguiente funcion:
+```python
+import tkinter as tk
+import math
+
+def gcode_a_createarc(x_inicial, y_inicial, x_final, y_final, i, j, sentido_horario=True):
+    #calcular el centro del circulo o elipse
+    cx=x_inicial+i
+    cy=y_inicial+j
+    radio=math.hypot(i,j)
+
+    #se calculan los vertices del rectangulo
+    x0 = cx - radio
+    y0 = cy - radio
+    x1 = cx + radio
+    y1 = cy + radio
+    #se calcula el angulo que hay entre el eje x y el vector que va del centro al inicio del arco
+    angle_start = math.degrees(math.atan2(y_inicial - cy, x_inicial - cx)) % 360
+    #se calcula el angulo que hay entre el eje x y el vector que va del centro al final del arco
+    angle_end = math.degrees(math.atan2(y_final - cy, x_final - cx)) % 360
+    
+    if sentido_horario:
+        extent = (angle_start - angle_end) % 360
+        extent = -extent  # sentido horario
+    else:
+        extent = (angle_end - angle_start) % 360
+    return {
+        "x0": bbox_x0,
+        "y0": bbox_y0,
+        "x1": bbox_x1,
+        "y1": bbox_y1,
+        "start": angle_start,
+        "extent": extent
+    }
+
+```
+  
