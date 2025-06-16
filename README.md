@@ -17,6 +17,11 @@ Para que la máquina entienda qué acción debe ejecutar, se utiliza un lenguaje
 Cada línea de G-Code representa una orden específica y el conjunto de estas en un programa permite que la máquina realice el proceso completo de fabricación de una pieza. 
 
 ### ¿Qué hace el proyecto?
+![](1.jpg)
+![](2.jpg)
+![](3.jpg)
+
+
 ### G-code a lenguaje natural
 | **Comando** | **Ejemplo** | **Significado** | **Palabra natural** | **Ejemplo** |
 | --- | --- | --- | --- | --- |
@@ -28,6 +33,7 @@ Cada línea de G-Code representa una orden específica y el conjunto de estas en
 Para G02, G03 las coordenadas I(eje x) y J(eje y) indican la posición del centro de la interpolación circular, estas son relativas al punto en el que se encuentre la herramienta de corte que se comporta como un nuevo (0, 0). Como el programa pretende facilitar la experiencia de usuario I, J se recibirán con respecto al origen así como todas las demás coordenadas.
 
 ### Interfaz gráfica de usuario (GUI)
+
 Decidimos utilizar la biblioteca estandar de interfaces graficas de pyhton, Tkinter, para relizar la interfaz grafica del simulador.  
 - **Interpolación lineal:** `canvas.create_line(x1, y1, x2, y2, fill="color")`  
 El tercer y cuarto argumento x2, y2 en G-code corresponden a X, Y respectivamente ya que son la coordenada de posición final.  
