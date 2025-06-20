@@ -1,6 +1,6 @@
 # Simulador de CNC 2D
 ### The Powerpuff Coders
-![Logo del proyecto](Logo.jpg)
+![Logo del proyecto](Imagenes/logo.jpg)
 
 ### Integrantes:  
 - Andrea Alejandra Suárez Cuervo  
@@ -16,7 +16,7 @@ Para que la máquina entienda qué acción debe ejecutar, se utiliza un lenguaje
 Cada línea de G-Code representa una orden específica y el conjunto de estas en un programa permite que la máquina realice el proceso completo de fabricación de una pieza. 
 
 ## ¿Qué hace el proyecto?
-![](3.jpg)
+![](Imagenes/gui_2.jpg)
 
 ### G-code a lenguaje natural
 | **Comando** | **Ejemplo** | **Significado** | **Palabra natural** | **Ejemplo** |
@@ -30,7 +30,7 @@ Para G02, G03 las coordenadas I(eje x) y J(eje y) indican la posición del centr
 
 ### Interfaz gráfica de usuario (GUI)
 Decidimos utilizar la biblioteca estandar de interfaces graficas de pyhton, Tkinter, para relizar la interfaz grafica del simulador.  
-![](1.jpg)
+![](Imagenes/gui_1.jpg)
 
 - **Interpolación lineal:** `canvas.create_line(x1, y1, x2, y2, fill="color")`  
 El tercer y cuarto argumento x2, y2 en G-code corresponden a X, Y respectivamente ya que son la coordenada de posición final.  
