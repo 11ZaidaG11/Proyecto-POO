@@ -1,5 +1,5 @@
 import math
-
+import tkinter as tk
 
 def gcode_a_createarc(x_inicial, y_inicial, x_final, y_final, i, j, sentido_horario=True):
     #calcular el centro del circulo o elipse
