@@ -91,6 +91,8 @@ def main(pag: ft.Page):
         multiline=True,
         min_lines=1,
         max_lines=11,
+        value="", #! translator file value
+        disabled=True
     )
 
     # El botón copiar copia el G-Code al portapapeles
