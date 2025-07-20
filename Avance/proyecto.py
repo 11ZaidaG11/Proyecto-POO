@@ -15,9 +15,9 @@ class NaturalFile:
     def __init__(self):
         self.nf_content = self.read_file()
     
-    def write_file(self): #! natural_tf.value: str
+    def write_file(self, text): #! natural_tf.value: str
         with open(self.name, "w", encoding="utf-8") as nf:
-            nf.write() #! natural_tf.value
+            nf.write(text) #! natural_tf.value
     
     def read_file(self):
         with open(self.name, "r", encoding="utf-8") as nf:
