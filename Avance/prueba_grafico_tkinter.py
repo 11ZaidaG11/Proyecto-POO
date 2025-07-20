@@ -51,7 +51,7 @@ x_start, y_start = 100, 100
 x_end, y_end = 150, 100
 i, j = 25, 0  # centro a 25 px a la derecha (125, 100)
 
-params = gcode_a_createarc(x_start, y_start, x_end, y_end, i, j, clockwise=True)
+params = gcode_a_createarc(x_start, y_start, x_end, y_end, i, j, sentido_horario=True)
 
 canvas.create_arc(
     params["x0"], params["y0"], params["x1"], params["y1"],

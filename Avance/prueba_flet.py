@@ -1,5 +1,8 @@
+# Se importa Flet para la interfaz gráfica
 import flet as ft
+from manual_usuario import ManualUsuario
 
+# función para recibir la "página" (interfaz principal)
 def main(pag: ft.Page):
     pag.title = "Simulador CNC"
     
@@ -15,6 +18,15 @@ def main(pag: ft.Page):
     blue_3 = "#a9e0ff"
     blue_4 = "#d6f0ff"
 
+    # Crear manual de usuario
+    manual = ManualUsuario()
+
+    # Función para abrir el manual desde el botón
+    def abrir_manual(e):
+        pag.dialog = manual.dialog
+        manual.open(e)
+
+    # Encabezado
     title = ft.Container(
         content=ft.Text("SIMULADOR CNC", 
                         color="white", 
@@ -26,6 +38,7 @@ def main(pag: ft.Page):
         alignment=ft.alignment.center
     )
 
+    # Campo para escribir en lenguaje natural
     natural_tf = ft.TextField(
         label="Lenguaje natural",
         bgcolor=blue_4,
@@ -60,6 +73,7 @@ def main(pag: ft.Page):
         )
     )
 
+    # Mostrar el G-Code generado (cuando se genere automáticamente)
     gcode_tf = ft.TextField(
         label="Código G",
         bgcolor=blue_4,
@@ -79,6 +93,7 @@ def main(pag: ft.Page):
         max_lines=11,
     )
 
+    # El botón copiar copia el G-Code al portapapeles
     def copy_gcode(e):
         pag.set_clipboard(gcode_tf.value)
 
@@ -107,27 +122,8 @@ def main(pag: ft.Page):
         width=700,
     )
 
-    # Cuadro de texto emergente
-    user_manual = ft.AlertDialog(
-        title=ft.Text(
-            "Manual de usuario",
-            font_family="Space Mono"
-        ),
-        title_padding=ft.padding.only(20, 20, 20, 0), # Espacio alrededor del titulo
-        content=ft.Container(
-            width=600,
-            content=ft.Text(
-                "Un manual de usuario es un documento que proporciona instrucciones" \
-                " y orientación a los usuarios para el uso adecuado de un producto," \
-                "sistema o servicio.",
-                font_family="Space Mono",
-                text_align=ft.TextAlign.JUSTIFY, # Justicar el texto
-            ),
-        ),
-    )
-
+    # Botón de ayuda (manual)
     user_but = ft.ElevatedButton(
-        on_click=lambda e: pag.open(user_manual), # Acción del boton
         text="?",
         color="white",
         bgcolor=blue_1,
@@ -136,21 +132,11 @@ def main(pag: ft.Page):
             shape=ft.CircleBorder()
         ),
         width=40,
-        height=40    
+        height=40,
+        on_click=abrir_manual
     )
 
-    start_but = ft.ElevatedButton(
-        text="▷",
-        color="white",
-        bgcolor=blue_1,
-        style=ft.ButtonStyle(
-            text_style=ft.TextStyle(font_family="Space Mono"),
-            shape=ft.CircleBorder()
-        ),
-        width=40,
-        height=40    
-    )
-
+    # Botón de parar
     stop_but = ft.ElevatedButton(
         text="◻",
         color="white",
@@ -163,6 +149,7 @@ def main(pag: ft.Page):
         height=40  
     )
 
+    # Campo para ingresar nombre o tipo de lámina
     sheet_tf = ft.TextField(
         label="Lamina",
         bgcolor=blue_4,
@@ -179,6 +166,20 @@ def main(pag: ft.Page):
         border_color=blue_1
     )
 
+    # Botón de iniciar simulación
+    start_but = ft.ElevatedButton(
+        text="▷",
+        color="white",
+        bgcolor=blue_1,
+        style=ft.ButtonStyle(
+            text_style=ft.TextStyle(font_family="Space Mono"),
+            shape=ft.CircleBorder()
+        ),
+        width=40,
+        height=40  
+    )
+
+    # Zona superior de controles
     tool_zone = ft.Container(
         content=ft.Row(
             controls=[
@@ -196,6 +197,7 @@ def main(pag: ft.Page):
         padding=ft.padding.all(20)
     )
 
+    # Espacio donde se dibuja el resultado del G-Code
     draw_zone = ft.Container(
         content=ft.Text(""),
         bgcolor="White",
@@ -203,6 +205,7 @@ def main(pag: ft.Page):
         expand=True
     )
 
+    # Zona central del simulador (lámina + botones)
     simul_zone = ft.Container(
         content=ft.Column(
             controls=[tool_zone, draw_zone]
@@ -210,6 +213,7 @@ def main(pag: ft.Page):
         expand=True
     )
 
+    # Añadir todos los componentes a la página
     pag.add(
         title, 
         ft.Row(
@@ -221,4 +225,5 @@ def main(pag: ft.Page):
         )
     )
 
+# Ejecutar la app
 ft.app(main, assets_dir="assets")
