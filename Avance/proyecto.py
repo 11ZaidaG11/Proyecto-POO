@@ -56,7 +56,7 @@ class Translator:
         print(f"Traduciendo {natural_file.name} a G-Code")
         return GCodeFile("archivo_generado.code")
     
-#Máquina de CNC que maneja TODO
+# Máquina de CNC que maneja TODO
 class CNCMachine:
     def __init__(self, name: str, work_area: WorkArea, tool: CutterTool, \
                  translator: Translator):
