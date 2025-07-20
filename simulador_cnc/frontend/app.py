@@ -1,6 +1,6 @@
 # Se importa Flet para la interfaz gráfica
 import flet as ft
-from simulador_cnc.backend.modulo1 import NaturalFile
+from ..backend.modulo1 import NaturalFile
 
 # función para recibir la "página" (interfaz principal)
 def main(pag: ft.Page):
