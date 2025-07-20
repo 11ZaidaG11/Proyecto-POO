@@ -1,16 +1,4 @@
-Holaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-
-
-
-
-aaaaa
-
-fgs
-d
-gds
-g
-s
-dg
-sd
-gs
-d
+Ubicar: -2.9, 5
+Recta: -6, 7.8
+Arco horario: -2.0, -3; Centro: 2.3, 4
+Arco antihorario: 2.2, 3; Centro: 2.345, 90
