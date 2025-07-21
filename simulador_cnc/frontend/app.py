@@ -1,7 +1,5 @@
 import flet as ft
-from backend.modulo1 import GCodeFile, NaturalFile, Translator, CutterTool
-
-
+from backend.modulo1 import NaturalFile, Translator
 
 
 def mai(page: ft.Page):

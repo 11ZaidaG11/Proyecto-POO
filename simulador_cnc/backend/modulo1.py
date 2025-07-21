@@ -22,6 +22,7 @@ class GCodeFile:
     def write_file(self, text: str):
         with open(self.name, "w", encoding="utf-8") as gf:
             gf.write(text)
+            
     def read_file(self):
         with open(self.name, "r", encoding="utf-8") as gf:
             return gf.read()
