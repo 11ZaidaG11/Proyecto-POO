@@ -1,10 +1,7 @@
 import flet as ft
-from backend.modulo1 import tool, g_file, GCodeFile, NaturalFile, Translator, CutterTool
+from backend.modulo1 import GCodeFile, NaturalFile, Translator, CutterTool
 
-naturalf = NaturalFile()
-g_file = GCodeFile()
-tool = CutterTool(3,5)
-traductor = Translator(naturalf)
+
 
 
 def mai(page: ft.Page):
@@ -18,14 +15,17 @@ def mai(page: ft.Page):
     )
 
     def natural_file(e):
+        naturalf = NaturalFile()
+        traductor = Translator(naturalf)
         cont = natural_tf.value
         naturalf.write_file(cont)
         print("natural file saved")
 
-        gcode = traductor.translate(tool, g_file)
+        gcode = traductor.translate()
         print("Translated")
 
-        gcode_tf.value = gcode
+        gcode_tf.value = gcode.__str__()
+        print("G-Code generated")
         page.update()
 
     traductor_but = ft.ElevatedButton(on_click=natural_file, text="Traducir")

@@ -22,6 +22,12 @@ class GCodeFile:
     def write_file(self, text: str):
         with open(self.name, "w", encoding="utf-8") as gf:
             gf.write(text)
+    def read_file(self):
+        with open(self.name, "r", encoding="utf-8") as gf:
+            return gf.read()
+        
+    def __str__(self):
+        return self.read_file()
     
 # Herramienta de corte 
 class CutterTool:
@@ -47,7 +53,7 @@ class Translator:
         self.match1 = re.finditer(self.patt1, self.content, re.MULTILINE)
         self.match2 = re.finditer(self.patt2, self.content, re.MULTILINE)
 
-    def translate(self, tool: CutterTool, g_file: GCodeFile) -> GCodeFile:
+    def translate(self) -> GCodeFile:
         lines: list = []
         if self.match1:
             for m in self.match1:
@@ -72,3 +78,6 @@ class Translator:
         nat_to_gc = "".join(lines)
         g_file.write_file(nat_to_gc)
         return g_file
+
+g_file = GCodeFile()
+tool = CutterTool(0,0)
