@@ -1,5 +1,11 @@
 import flet as ft
-from backend.modulo1 import naturalf, traductor, tool, g_file, GCodeFile, NaturalFile, Translator, CutterTool
+from backend.modulo1 import tool, g_file, GCodeFile, NaturalFile, Translator, CutterTool
+
+naturalf = NaturalFile()
+g_file = GCodeFile()
+tool = CutterTool(3,5)
+traductor = Translator(naturalf)
+
 
 def mai(page: ft.Page):
     page.title = "Simulador CNC"
