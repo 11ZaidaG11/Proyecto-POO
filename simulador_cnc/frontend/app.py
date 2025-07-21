@@ -1,12 +1,9 @@
-# Se importa Flet para la interfaz gráfica
 import flet as ft
-from backend.modulo1 import NaturalFile
+from backend.modulo1 import naturalf, traductor, tool, g_file, GCodeFile, NaturalFile, Translator, CutterTool
 
-# función para recibir la "página" (interfaz principal)
-def main(pag: ft.Page):
-    pag.title = "Simulador CNC"    
+def mai(page: ft.Page):
+    page.title = "Simulador CNC"
 
-# Campo para escribir en lenguaje natural
     natural_tf = ft.TextField(
         label="Lenguaje natural",
         multiline=True,
@@ -14,17 +11,32 @@ def main(pag: ft.Page):
         max_lines=11,
     )
 
-    # Crea un archivo de texto con el input de natural_tf
-    naturalf = NaturalFile()
+    def natural_file(e):
+        cont = natural_tf.value
+        naturalf.write_file(cont)
+        print("natural file saved")
 
-    traductor_but = ft.ElevatedButton(
-        on_click=naturalf.write_file(natural_tf.value),
-        text="Traducir",
+        gcode = traductor.translate(tool, g_file)
+        print("Translated")
+
+        gcode_tf.value = gcode
+        page.update()
+
+    traductor_but = ft.ElevatedButton(on_click=natural_file, text="Traducir")
+
+    # Mostrar el G-Code generado (cuando se genere automáticamente)
+    gcode_tf = ft.TextField(
+        label="Código G",
+        multiline=True,
+        min_lines=1,
+        max_lines=11,
+        read_only=True
     )
 
-    pag.add(
-        natural_tf, traductor_but
-    )
+    # El botón copiar copia el G-Code al portapapeles
+    def copy_gcode(e):
+        page.set_clipboard(gcode_tf.value)
 
-# Ejecutar la app
-ft.app(main, assets_dir="assets")
+    copy_but = ft.ElevatedButton(on_click=copy_gcode, text="Copiar")
+
+    page.add(natural_tf, traductor_but, gcode_tf, copy_but)

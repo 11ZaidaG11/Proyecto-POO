@@ -18,24 +18,16 @@ class NaturalFile:
 # El archivo con las instrucciones G-Code
 class GCodeFile:
     name: str = "gcode_file.txt"
-
-    def __init__(self):
-        self.gf_content = self.read_file()
     
     def write_file(self, text: str):
         with open(self.name, "w", encoding="utf-8") as gf:
             gf.write(text)
-
-    def read_file(self):
-        with open(self.name, "r", encoding="utf-8") as gf:
-            return gf.read()
     
 # Herramienta de corte 
 class CutterTool:
     def __init__(self, x:float, y:float):
         self.current_X = x
         self.current_y = y
-        self.active = False
 
 # Traductor entre el lenguaje natural y el G-Code
 class Translator:
