@@ -8,7 +8,7 @@ blue_4 = "#d6f0ff"
 font = "Space Mono"
 
 # df hace referencia a default
-class TextField(ft.TextField):
+class TextField(ft.TextField): # Campos de texto
     def __init__(self, label: str, rd: bool = False):
         super().__init__( # Hereda de TextField e inicializa
             label = label,
@@ -42,5 +42,17 @@ class CircularButt(ft.ElevatedButton):
             style = ft.ButtonStyle(
                 text_style = ft.TextStyle(font_family = font),
                 shape = ft.CircleBorder()
+            )
+        )
+
+class Button(ft.ElevatedButton):
+    def __init__(self, text: str, on_click: callable):
+        super().__init__(
+            text = text,
+            on_click = on_click,
+            color = "white",
+            bgcolor = blue_1,
+            style = ft.ButtonStyle(
+                text_style = ft.TextStyle(font_family = font)
             )
         )

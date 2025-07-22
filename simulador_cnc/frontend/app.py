@@ -1,12 +1,10 @@
 # Se importa Flet para la interfaz gráfica
 import flet as ft
 from backend.actions import natural_file, copy_gcode
-from frontend.objects_app import TextField, CircularButt
+from frontend.objects_app import TextField, CircularButt, Button
 
-
-# función para recibir la "página" (interfaz principal)
+# Interfaz principal
 def mai(pag: ft.Page):
-    
     # Colores
     blue_1 = "#004aad"
     blue_2 = "#50c0ff"
@@ -18,37 +16,39 @@ def mai(pag: ft.Page):
     # Encabezado
     title = ft.Container(
         content = ft.Text("SIMULADOR CNC", 
-                        color="white", 
-                        font_family="Press Start 2P",
-                        size=60
+                        color = "white", 
+                        font_family = "Press Start 2P",
+                        size = 60
         ),
-        height=130,
-        bgcolor=blue_1,
-        alignment=ft.alignment.center
+        height = 130,
+        bgcolor = blue_1,
+        alignment = ft.alignment.center
     )
 
     # Campos de texto
-    natural_tf = TextField(label="Lenguaje Natural", rd=False) # Ingresar lenguaje natural
-    gcode_tf = TextField(label="Codigo G", rd=True) # Ver el GCode generado
-    sheet_tf = TextField(label="Lámina", rd=True) # Ingresar tamaño de lámina
+    natural_tf = TextField("Lenguaje Natural", False) # Ingresar lenguaje natural
+    gcode_tf = TextField("Codigo G", True) # Ver el GCode generado
+    sheet_tf = TextField("Lámina", False) # Ingresar tamaño de lámina
 
     # Botones 
     start_but = CircularButt(text = "▷", on_click = print("Start")) # Iniciar
     stop_but = CircularButt(text = "◻", on_click = print("Stop")) # Detener
     user_but = CircularButt(text = "?", on_click = print("help")) #! Manual
 
+    traductor_but = Button()
+
     # Traductor de lenguaje natural a GCode
     traductor_but = ft.ElevatedButton(
         on_click= lambda e: natural_file(e, gcode_tf, natural_tf, pag),
-        text="Traducir",
-        color="white",
-        bgcolor=blue_1,
-        style=ft.ButtonStyle(
-            text_style=ft.TextStyle(font_family="Space Mono")
+        text = "Traducir",
+        color = "white",
+        bgcolor = blue_1,
+        style = ft.ButtonStyle(
+            text_style = ft.TextStyle(font_family = "Space Mono")
         )
     )
 
-    # El botón copiar copia el G-Code al portapapeles
+    # Copia el GCode al portapapeles
     copy_but = ft.ElevatedButton(
         on_click = lambda e: copy_gcode(e, gcode_tf, pag),
         text="Copiar",
