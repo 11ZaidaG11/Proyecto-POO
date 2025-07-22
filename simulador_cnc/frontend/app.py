@@ -1,46 +1,123 @@
+# Se importa Flet para la interfaz gráfica
 import flet as ft
-from backend.modulo1 import NaturalFile, Translator
+from backend.actions import natural_file, copy_gcode
+from frontend.objects_app import TextField, CircularButt
 
 
-def mai(page: ft.Page):
-    page.title = "Simulador CNC"
+# función para recibir la "página" (interfaz principal)
+def mai(pag: ft.Page):
+    
+    # Colores
+    blue_1 = "#004aad"
+    blue_2 = "#50c0ff"
+    blue_3 = "#a9e0ff"
+    blue_4 = "#d6f0ff"
 
-    natural_tf = ft.TextField(
-        label="Lenguaje natural",
-        multiline=True,
-        min_lines=1,
-        max_lines=11,
+    #! Crear manual de usuario
+
+    # Encabezado
+    title = ft.Container(
+        content = ft.Text("SIMULADOR CNC", 
+                        color="white", 
+                        font_family="Press Start 2P",
+                        size=60
+        ),
+        height=130,
+        bgcolor=blue_1,
+        alignment=ft.alignment.center
     )
 
-    def natural_file(e):
-        naturalf = NaturalFile()
-        traductor = Translator(naturalf)
-        cont = natural_tf.value
-        naturalf.write_file(cont)
-        print("natural file saved")
+    # Campos de texto
+    natural_tf = TextField(label="Lenguaje Natural", rd=False) # Ingresar lenguaje natural
+    gcode_tf = TextField(label="Codigo G", rd=True) # Ver el GCode generado
+    sheet_tf = TextField(label="Lámina", rd=True) # Ingresar tamaño de lámina
 
-        gcode = traductor.translate()
-        print("Translated")
+    # Botones 
+    start_but = CircularButt(text = "▷", on_click = print("Start")) # Iniciar
+    stop_but = CircularButt(text = "◻", on_click = print("Stop")) # Detener
+    user_but = CircularButt(text = "?", on_click = print("help")) #! Manual
 
-        gcode_tf.value = gcode.__str__()
-        print("G-Code generated")
-        page.update()
-
-    traductor_but = ft.ElevatedButton(on_click=natural_file, text="Traducir")
-
-    # Mostrar el G-Code generado (cuando se genere automáticamente)
-    gcode_tf = ft.TextField(
-        label="Código G",
-        multiline=True,
-        min_lines=1,
-        max_lines=11,
-        read_only=True
+    # Traductor de lenguaje natural a GCode
+    traductor_but = ft.ElevatedButton(
+        on_click= lambda e: natural_file(e, gcode_tf, natural_tf, pag),
+        text="Traducir",
+        color="white",
+        bgcolor=blue_1,
+        style=ft.ButtonStyle(
+            text_style=ft.TextStyle(font_family="Space Mono")
+        )
     )
 
     # El botón copiar copia el G-Code al portapapeles
-    def copy_gcode(e):
-        page.set_clipboard(gcode_tf.value)
+    copy_but = ft.ElevatedButton(
+        on_click = lambda e: copy_gcode(e, gcode_tf, pag),
+        text="Copiar",
+        color="white",
+        bgcolor=blue_1,
+        style=ft.ButtonStyle(
+            text_style=ft.TextStyle(font_family="Space Mono")
+        )
+    )
 
-    copy_but = ft.ElevatedButton(on_click=copy_gcode, text="Copiar")
+    traductor_zone = ft.Container(
+        padding=ft.Padding(left=20, top=20, right=20, bottom=0),
+        content=ft.Column(
+            controls=[
+                natural_tf, 
+                ft.Container(content=traductor_but, alignment=ft.alignment.center_right), 
+                gcode_tf,
+                ft.Container(content=copy_but, alignment=ft.alignment.center_right), 
+            ],
+            spacing=10
+        ),
+        bgcolor=blue_3,
+        width=700,
+    )
 
-    page.add(natural_tf, traductor_but, gcode_tf, copy_but)
+
+
+    # Zona superior de controles
+    tool_zone = ft.Container(
+        content=ft.Row(
+            controls=[
+                sheet_tf,
+                ft.Row(
+                    controls=[start_but, stop_but, user_but],
+                    spacing=10
+                )
+            ],
+            alignment=ft.MainAxisAlignment.SPACE_BETWEEN
+        ),
+        height=85,
+        width=1050,
+        bgcolor=blue_2,
+        padding=ft.padding.all(20)
+    )
+
+    # Espacio donde se dibuja el resultado del G-Code
+    draw_zone = ft.Container(
+        content=ft.Text(""),
+        bgcolor="White",
+        width=1050,
+        expand=True
+    )
+
+    # Zona central del simulador (lámina + botones)
+    simul_zone = ft.Container(
+        content=ft.Column(
+            controls=[tool_zone, draw_zone]
+        ),
+        expand=True
+    )
+
+    # Añadir todos los componentes a la página
+    pag.add(
+        title, 
+        ft.Row(
+            expand=True,
+            controls=[
+                ft.Container(content=simul_zone, expand=True),
+                ft.Container(content=traductor_zone, width=600),
+            ]
+        )
+    )

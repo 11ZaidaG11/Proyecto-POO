@@ -4,17 +4,18 @@ import re
 class NaturalFile:
     name: str = "natural_file.txt"
 
-    def __init__(self):
-        self.nf_content = self.read_file()
-    
-    def write_file(self, text): #! natural_tf.value: str
+    def write_file(self, text): 
         with open(self.name, "w", encoding="utf-8") as nf:
-            nf.write(text) #! natural_tf.value
-    
+            nf.write(text)
+
     def read_file(self):
         with open(self.name, "r", encoding="utf-8") as nf:
             return nf.read()
-        
+
+    def clean_file(self):
+        with open(self.name, "w", encoding="utf-8") as nf:
+            nf.write("")
+
 # El archivo con las instrucciones G-Code
 class GCodeFile:
     name: str = "gcode_file.txt"
@@ -26,6 +27,10 @@ class GCodeFile:
     def read_file(self):
         with open(self.name, "r", encoding="utf-8") as gf:
             return gf.read()
+
+    def clean_file(self):
+        with open(self.name, "w", encoding="utf-8") as gf:
+            gf.write("")
         
     def __str__(self):
         return self.read_file()
@@ -50,7 +55,7 @@ class Translator:
     patt2 = r"Arco (horario|antihorario): (-?\d+(?:\.\d+)?), (-?\d+(?:\.\d+)?); Centro: (-?\d+(?:\.\d+)?), (-?\d+(?:\.\d+)?)"
 
     def __init__(self, n_file: NaturalFile):
-        self.content = n_file.nf_content
+        self.content = n_file.read_file()
         self.match1 = re.finditer(self.patt1, self.content, re.MULTILINE)
         self.match2 = re.finditer(self.patt2, self.content, re.MULTILINE)
 
