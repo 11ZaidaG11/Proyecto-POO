@@ -1,4 +1,1 @@
-Ubicar: 60, 60
-Recta: 80, 60
-Recta: 70, 40
-Recta: 60, 60
+Ubicar: 4, 5
