@@ -1,6 +1,8 @@
 import flet as ft
+import asyncio
 from backend.actions import natural_file, copy_gcode, graficar, vaciar
 from frontend.objects import TextField, CircularButt
+from backend.modulo1 import ManualUsuario
 from backend.actions import natural_file, copy_gcode
 from frontend.objects import TextField, CircularButt, Button
 
@@ -14,7 +16,8 @@ def mai(pag: ft.Page):
     blue_3 = "#a9e0ff"
     blue_4 = "#d6f0ff"
 
-    #! Crear manual de usuario
+    # Crear manual de usuario
+    manual = ManualUsuario(pag)
 
     # Encabezado
     title = ft.Container(
@@ -40,7 +43,10 @@ def mai(pag: ft.Page):
     text="◻",
     on_click=lambda e: vaciar(e, natural_tf, gcode_tf, sheet_tf, pag)
     ) 
-    user_but = CircularButt(text = "?", on_click = print("help")) #! Manual
+    user_but = CircularButt(
+        text="?", 
+        on_click=manual.open_manual  # ← activa el manual
+    )
 
 
     # Traductor de lenguaje natural a GCode

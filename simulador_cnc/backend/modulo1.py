@@ -1,7 +1,9 @@
 import re
 import matplotlib.pyplot as plt
 import numpy as np
-
+import math
+import flet as ft
+import asyncio
 
 # El archivo con instrucciones en lenguaje natural
 class NaturalFile:
@@ -60,35 +62,35 @@ class Translator:
 
     def __init__(self, n_file: NaturalFile):
         self.content = n_file.read_file()
-        self.match1 = re.finditer(self.patt1, self.content, re.MULTILINE)
-        self.match2 = re.finditer(self.patt2, self.content, re.MULTILINE)
         self.current_X = 0.0 
         self.current_Y = 0.0
 
     def translate(self) -> GCodeFile:
         lines: list = []
-        if self.match1:
-            for m in self.match1:
-                G = self.dictionary[m.group(1)]
-                X = m.group(2)
-                Y = m.group(3)
-                line = f"{G} X{X} Y{Y}\n"
-                lines.append(line)
-                self.current_X, self.current_Y = X, Y
+        for line in self.content.strip().splitlines():
+            line = line.strip()
+            m1 = re.match(self.patt1, line)
+            if m1:
+                G = self.dictionary[m1.group(1)]
+                X = m1.group(2)
+                Y = m1.group(3)
+                lines.append(f"{G} X{X} Y{Y}\n")
+                self.current_X, self.current_Y = float(X), float(Y)
+                continue
 
-        if self.match2:
-            for m in self.match2:
-                G = self.dictionary[m.group(1)]
-                X = m.group(2)
-                Y = m.group(3)
-                preI = m.group(4)
-                preJ = m.group(5)
-                I = float(preI) - float(self.current_X)
-                J = float(preJ) - float(self.current_Y)
-                line = f"{G} X{X} Y{Y} I{I} J{J}\n"
-                lines.append(line)
-                self.current_X, self.current_Y = X, Y
-        
+            m2 = re.match(self.patt2, line)
+            if m2:
+                G = self.dictionary[m2.group(1)]
+                X = m2.group(2)
+                Y = m2.group(3)
+                preI = float(m2.group(4))
+                preJ = float(m2.group(5))
+                I = preI - self.current_X
+                J = preJ - self.current_Y
+                lines.append(f"{G} X{X} Y{Y} I{I} J{J}\n")
+                self.current_X, self.current_Y = float(X), float(Y)
+                continue
+            
         nat_to_gc = "".join(lines)
         g_file.write_file(nat_to_gc)
         return g_file
@@ -136,14 +138,14 @@ class Grapher:
                 y = float(m.group(9))
                 I = float(m.group(10))
                 J = float(m.group(11))
-                self._dibujar_arco(ax, x, y, I, J, sentido="horario", puntos=puntos)
+                self.dibujar_arco(ax, x, y, I, J, sentido="horario", puntos=puntos)
 
             elif m.group(12) == "G03":
                 x = float(m.group(13))
                 y = float(m.group(14))
                 I = float(m.group(15))
                 J = float(m.group(16))
-                self._dibujar_arco(ax, x, y, I, J, sentido="antihorario", puntos=puntos)
+                self.dibujar_arco(ax, x, y, I, J, sentido="antihorario", puntos=puntos)
 
         xs, ys = zip(*puntos)
         margin = 10
@@ -151,7 +153,7 @@ class Grapher:
         ax.set_ylim(min(ys) - margin, max(ys) + margin)
         ax.set_aspect('equal')
 
-    def _dibujar_arco(self, ax, x, y, I, J, sentido, puntos):
+    def dibujar_arco(self, ax, x, y, I, J, sentido, puntos):
         cx = tool.current_X + I
         cy = tool.current_y + J
         r = np.sqrt(I**2 + J**2)
@@ -182,4 +184,123 @@ class WorkArea:
     def is_in_bounds(self, sheet_width: float, sheet_height: float) -> bool:
         return sheet_width <= self.max_width and sheet_height <= self.max_height
 
-work_area = WorkArea(max_width=300, max_height=200)
+class ManualUsuario:
+    def __init__(self, page: ft.Page):
+        self.page = page
+        self.dialog = ft.AlertDialog(
+            modal=True,
+            shape=ft.RoundedRectangleBorder(radius=20),
+            bgcolor="#e2d6ff",
+            title=ft.Text(
+                "Manual de usuario",
+                font_family="Press Start 2P",
+                size=20,
+                weight=ft.FontWeight.BOLD,
+                color="#5f00ad",
+                text_align=ft.TextAlign.CENTER
+            ),
+            title_padding=ft.padding.only(20, 20, 20, 0),
+            content=ft.Container(
+                width=600,
+                height=400,
+                padding=ft.padding.all(20),
+                content=ft.Column(
+                    scroll=ft.ScrollMode.AUTO,
+                    controls=[
+                        ft.Text(
+                            self.texto_manual(),
+                            font_family="Space Mono",
+                            size=16,
+                            color="black",
+                            text_align=ft.TextAlign.JUSTIFY
+                        )
+                    ]
+                )
+            ),
+            actions=[
+                ft.TextButton(
+                    "Cerrar",
+                    on_click=self.close,
+                    style=ft.ButtonStyle(
+                        color={"": "#b484db"},
+                        padding=ft.padding.symmetric(horizontal=20, vertical=10),
+                        text_style=ft.TextStyle(font_family="Space Mono", size=14)
+                    )
+                )
+            ],
+            actions_alignment=ft.MainAxisAlignment.END
+        )
+        self.page.overlay.append(self.dialog)
+
+    def texto_manual(self):
+        return (
+            "Este software permite controlar un sistema CNC de forma remota. "
+            "En el menú lateral puedes describir, visualizar su ruta de ejecución "
+            "y controlar parámetros de velocidad y posición. "
+            "\n\nPasos sugeridos:\n"
+            "1. Carga tu archivo desde el botón 'Cargar G-code'.\n"
+            "2. Verifica la vista previa de trayectorias.\n"
+            "3. Usa los controles de simulación o ejecución real para iniciar el proceso.\n"
+            "4. Consulta los reportes de ejecución desde la pestaña correspondiente.\n"
+            "\nEste manual se irá actualizando con nuevas versiones."
+        )
+
+    def open_manual(self, e):
+        print("Abriendo manual de usuario.")
+        self.page.dialog = self.dialog
+        self.dialog.open = True
+        self.page.update()
+
+    def close(self, e):
+        self.dialog.open = False
+        self.page.update()
+
+
+class ErrorTamano:
+    def __init__(self, page: ft.Page, mensaje_error: str, duracion=3):
+        self.page = page
+        self.mensaje_error = mensaje_error
+        self.duracion = duracion
+
+        self.dialog = ft.AlertDialog(
+            modal=True,
+            shape=ft.ContinuousRectangleBorder(radius=20),
+            bgcolor="#ffd6de",
+            title=ft.Text(
+                "Error",
+                font_family="Press Start 2P",
+                size=15,
+                weight=ft.FontWeight.BOLD,
+                color="#ad0056",
+                text_align=ft.TextAlign.CENTER
+            ),
+            title_padding=ft.padding.only(20, 20, 20, 0),
+            content=None
+        )
+
+        self.page.overlay.append(self.dialog)
+
+    async def mostrar(self):
+        self.dialog.content = ft.Container(
+            width=220,
+            height=140,
+            padding=ft.padding.all(20),
+            content=ft.Column(
+                scroll=ft.ScrollMode.AUTO,
+                controls=[
+                    ft.Text(
+                        self.mensaje_error,
+                        font_family="Space Mono",
+                        size=16,
+                        color="black",
+                        text_align=ft.TextAlign.JUSTIFY
+                    )
+                ]
+            )
+        )
+
+        self.dialog.open = True
+        self.page.update()
+        await asyncio.sleep(self.duracion)
+        self.dialog.open = False
+        self.page.update()
