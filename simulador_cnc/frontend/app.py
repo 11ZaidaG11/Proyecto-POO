@@ -38,6 +38,7 @@ def mai(pag: ft.Page):
     traductor_but = Button("Traducir", lambda e: natural_file(e, gcode_tf, natural_tf, pag))
     # Copia el GCode al portapapeles
     copy_but = Button("Copiar",  lambda e: copy_gcode(e, gcode_tf, pag))
+    img = ft.Image(width=600, height=400, fit=ft.ImageFit.FIT_HEIGHT)
     grap_but = Button("Graficar", lambda e: graficar(e, img)) # Graficar el GCode
 
     traductor_zone = ft.Container(
@@ -72,8 +73,6 @@ def mai(pag: ft.Page):
         bgcolor=blue_2,
         padding=ft.padding.all(20)
     )
-
-    img = ft.Image(width=600, height=400, fit=ft.ImageFit.FIT_HEIGHT)
 
     # Espacio donde se dibuja el resultado del G-Code
     draw_zone = ft.Container(
