@@ -38,13 +38,15 @@ Toda la implementacion se estructuro mediante la programación orientada a objet
 Para G02, G03 las coordenadas I(eje x) y J(eje y) indican la posición del centro de la interpolación circular, estas son relativas al punto en el que se encuentre la herramienta de corte que se comporta como un nuevo (0, 0). Como el programa pretende facilitar la experiencia de usuario I, J se recibirán con respecto al origen así como todas las demás coordenadas.
 
 ### Interfaz gráfica de usuario (GUI)
-Decidimos utilizar la biblioteca estandar de interfaces graficas de pyhton, Tkinter, para relizar la interfaz grafica del simulador.  
+Decidimos utilizar Flet, una biblioteca moderna basada en Flutter que permite construir interfaces web, de escritorio y móviles con Python de manera sencilla y visualmente atractiva. 
 ![](Imagenes/gui_1.jpg)
 
-- **Interpolación lineal:** `canvas.create_line(x1, y1, x2, y2, fill="color")`  
-El tercer y cuarto argumento x2, y2 en G-code corresponden a X, Y respectivamente ya que son la coordenada de posición final.  
-- **Interpolación circular:** `canvas.create_arc(x0, y0, x1, y1,start=n,extent=n,style=tk.ARC)`  
-Los primeros cuatro argumentos x0, y0, x1, y1 representan las esquinas opuestas del rectangulo que delimita la elipse o circulo de donde se extrae el arco, en G-code X e Y darian el punto final del arco e I y J se utilizarian para calcular el centro. Como se muestra en la siguiente funcion:
+Para representar las trayectorias, se utilizó Matplotlib, haciendo uso del backend "Agg" para renderizar los gráficos directamente como imágenes que luego son mostradas en la interfaz Flet mediante componentes de imagen codificada en base64.
+
+- **Interpolación lineal:**  G00 `ax.plot([tool.current_X, x], [tool.current_y, y], 'k--')`   G01 `ax.plot([tool.current_X, x], [tool.current_y, y], 'b-') `
+Los argumentos x, y en G-code son la coordenada de posición final.  
+- **Interpolación circular:** `self._dibujar_arco(ax, x, y, I, J, sentido="antihorario" o "antihorario", puntos=puntos)`  
+G-code X e Y darian el punto final del arco e I y J se utilizarian para calcular el centro. Para luego calcular los angulos inicial y final y generar puntos entre estos dos angulos como se muestra en la siguiente funcion:
 ```python
 import re
 import matplotlib.pyplot as plt
