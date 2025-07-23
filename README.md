@@ -71,26 +71,6 @@ def _dibujar_arco(self, ax, x, y, I, J, sentido, puntos):
 ```mermaid
 classDiagram
 direction TB
-    class WorkArea {
-	    - size: tuple[float, float, float]
-    }
-    class Sheet {
-	    - material: str
-	    - size: list[float, float, float]
-	    + is_fit(area: Workarea) : bool
-    }
-    class NaturalFile {
-	    - name: str
-    }
-    class Translator {
-	    - dictionary: dict[natural_word: 'G-code']
-	    + translate(naturalfile: NaturalFile) : GcodeFile
-    }
-    class GCodeFile {
-	    - name: str
-    }
-    class ModifiedSheet {
-    }
     class CNCMachine {
 	    - name: str
 	    - work_area: WorkArea
@@ -98,19 +78,49 @@ direction TB
 	    + start()
 	    + stop()
     }
-    class CutterTool {
-	    + apply(sheet: Sheet, gcode: GCodeFile) : ModifiedSheet
-	    + activate_tool()
-	    + deactivate_tool()
+    class WorkArea {
+	    - max_width: float
+      - max_height: float
+      - is_in_bounds()bool
+    }
+    class NaturalFile {
+	    - name: str
+      - write_file()
+      - read_file()
+      - clean_file()
+    }
+    class Translator {
+	    - dictionary: dict[natural_word: 'G-code']
+      - content
+      - match1:list
+      - match2:list
+      - current_X:float
+      - current_Y:float
+	    + translate(naturalfile: NaturalFile) : GcodeFile
     }
 
-    Sheet <|-- ModifiedSheet
+    class Grapher {
+	    - content
+      - graph()
+      - _dibujar_arco
+    }
+    class GCodeFile {
+	    - name: str
+      - write_file()
+      - read_file()
+      - clean_file()
+      - __str__()
+    }
+    class CutterTool {
+	    - current_X: float
+      - current_y: float
+    }
+
     CNCMachine --> WorkArea
     CNCMachine --> CutterTool
-    Translator --> GCodeFile
-    Translator --> NaturalFile
     CNCMachine --> Translator
-    CutterTool --> Sheet
-    CutterTool --> ModifiedSheet
-    CutterTool ..> GCodeFile : needs
+    Translator --> NaturalFile
+    Grapher ..> Translator : needs
+    Grapher --> GCodeFile
+    
 ```
