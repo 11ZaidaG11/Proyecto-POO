@@ -81,13 +81,18 @@ def _dibujar_arco(self, ax, x, y, I, J, sentido, puntos):
 
 ```mermaid
 classDiagram
+classDiagram
 direction TB
     class CNCMachine {
-	    - name: str
-	    - work_area: WorkArea
-	    - tool: CutterTool
-	    + start()
-	    + stop()
+	    -natural_file:"NaturalFile"
+        -gcode_file:"GCodeFile"
+        -translator
+        -grapher
+        -work_area:"WorkArea"
+        -load_natural_instructions()
+        -translate_to_gcode()
+        -generate_grapher()
+        -validate_sheet()
     }
     class WorkArea {
 	    - max_width: float
