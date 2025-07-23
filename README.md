@@ -20,8 +20,9 @@ Cada línea de G-Code representa una orden específica y el conjunto de estas en
 Al hacer uso del CNC (Control Numérico por Computadora), la generación manual de G-code resulta ser uno de los mayores retos, ya que estos códigos suelen ser muy largos y por tanto el operario es muy propenso a equivocarse elaborandolos y un solo error de escritura o en las coordenadas puede llevar a que se dañe la lamina de trabajo o se haga una figura distinta a la deseasa, desperdiciando material y tiempo.
 Por esto, se coinsidera necesario contar con una herramienta como el Simulador de CNC 2D, que  permite que una persona que no sepa G-code escriba las instrucciones en lenguaje natural y estas sean posteriormente traducidas, ademas de permitir previsualizar gráficamente cómo quedará la lámina.
 ### Solución implementada
-
-
+Con el fin de suplir esta necesidad se desarroló un simulador que permite al usuario ingresar los comandos en lenguaje natural, traducirlos al presionar u botón mostrando el G-code resultante y graficar el recorrido de la herramienta. Este simulador tiene un sistema de validacion inicial del tamaño de la lamina, asegurando que sean medidas validas y que estas no superen el tamaño del area de trabajo definida (300x200mm). Permitiendo al usuario verificar si las instrucciones son viables y como se comportaria la herramienta.
+### ¿Cómo se abordo el problema?
+Toda la implementacion se estructuro mediante la programación orientada a objetos, divididnedo el sistema en modulos independientes pero integrados entre si. Se crea una clase |Translator| que identifica patrones en el texto como “Ubicar”, “Recta” o “Arco horario/antihorario” y los convierte en instrucciones en G-code, estas son utilizadas por la clase |Grapher| la cual identifica patrones en el G-code para luego graficarlos utilizando mathplotlib, permitiendo al usuario validar cada instrucción antes de su ejecución física.
 
 ## ¿Qué hace el proyecto?
 ![](Imagenes/gui_2.jpg)
