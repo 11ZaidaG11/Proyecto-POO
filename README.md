@@ -5,7 +5,12 @@
 ### Integrantes:  
 - Andrea Alejandra Suárez Cuervo  
 - Katherine Restrepo Rodríguez  
-- Zaida Alejandra Guzmán Martínez  
+- Zaida Alejandra Guzmán Martínez
+
+### Instalación
+Para ejecutar este paquete instalar:  
+- flet  
+- Matplotlib  
 
 ### Contextualización
 Para comprender a cabalidad el proyecto es necesario conocer de antemano que es y para que se usa el CNC y el G-code.
