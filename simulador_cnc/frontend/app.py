@@ -1,9 +1,6 @@
-import flet as ft
-from backend.actions import natural_file, copy_gcode, graficar 
-from frontend.objects_app import TextField, CircularButt
-from backend.actions import natural_file, copy_gcode
-from frontend.objects_app import TextField, CircularButt, Button
-
+import flet as ft # Se importa Flet para la interfaz gráfica
+from backend.actions import natural_file, copy_gcode, graficar
+from frontend.objects import TextField, CircularButt, Button
 
 # Interfaz principal
 def mai(pag: ft.Page):
@@ -33,33 +30,16 @@ def mai(pag: ft.Page):
     sheet_tf = TextField("Lámina", False) # Ingresar tamaño de lámina
 
     # Botones 
-    start_but = CircularButt(text = "▷", on_click = print("Start")) # Iniciar
-    stop_but = CircularButt(text = "◻", on_click = print("Stop")) # Detener
-    user_but = CircularButt(text = "?", on_click = print("help")) #! Manual
-
+    start_but = CircularButt("▷", lambda e: print("Start")) # Iniciar
+    stop_but = CircularButt("◻", lambda e: print("Stop")) # Detener
+    user_but = CircularButt("?", lambda e: print("help")) #! Manual
 
     # Traductor de lenguaje natural a GCode
-    traductor_but = ft.ElevatedButton(
-        on_click= lambda e: natural_file(e, gcode_tf, natural_tf, pag),
-        text = "Traducir",
-        color = "white",
-        bgcolor = blue_1,
-        style = ft.ButtonStyle(
-            text_style = ft.TextStyle(font_family = "Space Mono")
-        )
-    )
-
+    traductor_but = Button("Traducir", lambda e: natural_file(e, gcode_tf, natural_tf, pag))
     # Copia el GCode al portapapeles
-    copy_but = ft.ElevatedButton(
-        on_click = lambda e: copy_gcode(e, gcode_tf, pag),
-        text="Copiar",
-        color="white",
-        bgcolor=blue_1,
-        style=ft.ButtonStyle(
-            text_style=ft.TextStyle(font_family="Space Mono")
-        )
-    )
-
+    copy_but = Button("Copiar",  lambda e: copy_gcode(e, gcode_tf, pag))
+    img = ft.Image(width=600, height=400, fit=ft.ImageFit.FIT_HEIGHT)
+    grap_but = Button("Graficar", lambda e: graficar(e, img)) # Graficar el GCode
 
     traductor_zone = ft.Container(
         padding=ft.Padding(left=20, top=20, right=20, bottom=0),
@@ -75,7 +55,6 @@ def mai(pag: ft.Page):
         bgcolor=blue_3,
         width=700,
     )
-
 
     # Zona superior de controles
     tool_zone = ft.Container(
@@ -95,26 +74,12 @@ def mai(pag: ft.Page):
         padding=ft.padding.all(20)
     )
 
-
-    img = ft.Image(width=600, height=400, fit=ft.ImageFit.FIT_HEIGHT)
-
-    # Botón para graficar
-    graficar_but = ft.ElevatedButton(
-        on_click=lambda e: graficar(e, img),
-        text="Graficar",
-        color="white",
-        bgcolor=blue_1,
-        style=ft.ButtonStyle(
-            text_style=ft.TextStyle(font_family="Space Mono")
-        )
-    )
-    
     # Espacio donde se dibuja el resultado del G-Code
     draw_zone = ft.Container(
         content=ft.Column(
             controls=[
                 ft.Container(content=img, alignment=ft.alignment.center),
-                ft.Container(content=graficar_but, alignment=ft.alignment.center)
+                ft.Container(content=grap_but, alignment=ft.alignment.center)
             ],
             horizontal_alignment=ft.CrossAxisAlignment.CENTER
         ),
@@ -138,7 +103,4 @@ def mai(pag: ft.Page):
             expand=True,
             controls=[
                 ft.Container(content=simul_zone, expand=True),
-                ft.Container(content=traductor_zone, width=600),
-            ]
-        )
-    )
+                ft.Container(content=traductor_zone, width=600)]))

@@ -1,4 +1,4 @@
-Arco horario: 3, 4; Centro: 6.7, -20
-Ubicar: 4, 5
-Recta: -7, 8.7
-Arco antihorario: 3, 0.4; Centro: 7, 3
+Arco horario: 3, 4; Centro: 6.7, -20
+Ubicar: 4, 5
+Recta: -7, 8.7
+Arco antihorario: 3, 0.4; Centro: 7, 3
