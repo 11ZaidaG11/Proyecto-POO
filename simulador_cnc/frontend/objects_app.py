@@ -7,7 +7,6 @@ blue_3 = "#a9e0ff"
 blue_4 = "#d6f0ff"
 font = "Space Mono"
 
-# df hace referencia a default
 class TextField(ft.TextField): # Campos de texto
     def __init__(self, label: str, rd: bool = False):
         super().__init__( # Hereda de TextField e inicializa
