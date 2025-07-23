@@ -69,13 +69,6 @@ def _dibujar_arco(self, ax, x, y, I, J, sentido, puntos):
 ## Diagrama de Clases
 
 ```mermaid
----
-config:
-  theme: default
-  look: handDrawn
-  layout: dagre
-title: Simulador de CNC
----
 classDiagram
 direction TB
     class WorkArea {
