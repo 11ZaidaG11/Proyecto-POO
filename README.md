@@ -81,7 +81,6 @@ def _dibujar_arco(self, ax, x, y, I, J, sentido, puntos):
 
 ```mermaid
 classDiagram
-classDiagram
 direction TB
     class CNCMachine {
 	    -natural_file:"NaturalFile"
@@ -138,7 +137,6 @@ direction TB
     Translator --> NaturalFile
     Grapher ..> Translator : needs
     Grapher --> GCodeFile
-    
 ```
 ## Diagrama de flujo `Translator`
 ```mermaid
