@@ -3,7 +3,7 @@ from backend.actions import natural_file, copy_gcode, graficar
 from frontend.objects import TextField, CircularButt
 from backend.actions import natural_file, copy_gcode
 from frontend.objects import TextField, CircularButt, Button
-
+from frontend.manual_usuario import ManualUsuario
 
 # Interfaz principal
 def mai(pag: ft.Page):
@@ -13,7 +13,8 @@ def mai(pag: ft.Page):
     blue_3 = "#a9e0ff"
     blue_4 = "#d6f0ff"
 
-    #! Crear manual de usuario
+    # Crear manual de usuario
+    manual = ManualUsuario(pag)
 
     # Encabezado
     title = ft.Container(
@@ -34,7 +35,7 @@ def mai(pag: ft.Page):
 
     # Botones 
     stop_but = CircularButt(text = "◻", on_click = print("Stop")) # Detener
-    user_but = CircularButt(text = "?", on_click = print("help")) #! Manual
+    user_but = CircularButt(text = "?", on_click = manual.open_manual) #! Manual
 
 
     # Traductor de lenguaje natural a GCode
