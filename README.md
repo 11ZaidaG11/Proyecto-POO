@@ -37,41 +37,33 @@ El tercer y cuarto argumento x2, y2 en G-code corresponden a X, Y respectivament
 - **Interpolación circular:** `canvas.create_arc(x0, y0, x1, y1,start=n,extent=n,style=tk.ARC)`  
 Los primeros cuatro argumentos x0, y0, x1, y1 representan las esquinas opuestas del rectangulo que delimita la elipse o circulo de donde se extrae el arco, en G-code X e Y darian el punto final del arco e I y J se utilizarian para calcular el centro. Como se muestra en la siguiente funcion:
 ```python
-import tkinter as tk
+import re
+import matplotlib.pyplot as plt
+import numpy as np
 import math
 
-def gcode_a_createarc(x_inicial, y_inicial, x_final, y_final, i, j, sentido_horario=True):
-    # Centro del circulo
-    cx=x_inicial+i
-    cy=y_inicial+j
-    radio=math.hypot(i,j)
+def _dibujar_arco(self, ax, x, y, I, J, sentido, puntos):
+        cx = tool.current_X + I
+        cy = tool.current_y + J
+        r = np.sqrt(I**2 + J**2)
 
-    # Vertices del rectangulo
-    x0 = cx - radio
-    y0 = cy - radio
-    x1 = cx + radio
-    y1 = cy + radio
+        start_ang = np.arctan2(tool.current_y - cy, tool.current_X - cx)
+        end_ang = np.arctan2(y - cy, x - cx)
 
-    # Angulo que hay entre el eje x y el vector que va del centro al inicio del arco
-    angulo_inicial = math.degrees(math.atan2(y_inicial - cy, x_inicial - cx)) % 360
+        if sentido == "horario":
+            if end_ang > start_ang:
+                end_ang -= 2 * np.pi
+        else:  # antihorario
+            if end_ang < start_ang:
+                end_ang += 2 * np.pi
 
-    # Angulo que hay entre el eje x y el vector que va del centro al final del arco
-    angulo_final = math.degrees(math.atan2(y_final - cy, x_final - cx)) % 360
-    
-    if sentido_horario:
-        extent = (angulo_inicial - angulo_final) % 360
-        extent = -extent  # sentido horario
-    else:
-        extent = (angulo_final - angulo_inicial) % 360
-    return {
-        "x0": x0,
-        "y0": y0,
-        "x1": x1,
-        "y1": y1,
-        "start": angulo_inicial,
-        "extent": extent
-    }
+        theta = np.linspace(start_ang, end_ang, 100)
+        x_arc = cx + r * np.cos(theta)
+        y_arc = cy + r * np.sin(theta)
 
+        ax.plot(x_arc, y_arc, 'r-')
+        tool.current_X, tool.current_y = x, y
+        puntos.append((x, y))
 ```
   
 ## Diagrama de Clases
