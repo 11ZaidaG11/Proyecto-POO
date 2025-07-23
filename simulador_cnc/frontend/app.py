@@ -1,11 +1,15 @@
 import flet as ft
+<<<<<<< HEAD
 import asyncio
 from backend.actions import natural_file, copy_gcode, graficar, vaciar
 from frontend.objects import TextField, CircularButt
 from backend.modulo1 import ManualUsuario
 from backend.actions import natural_file, copy_gcode
+=======
+from backend.actions import natural_file, copy_gcode, graficar
+>>>>>>> 43c7fc2f9a9aeb882995d75329377dbebe45ca18
 from frontend.objects import TextField, CircularButt, Button
-
+from frontend.manual_usuario import ManualUsuario
 
 # Interfaz principal
 def mai(pag: ft.Page):
@@ -16,28 +20,33 @@ def mai(pag: ft.Page):
     blue_3 = "#a9e0ff"
     blue_4 = "#d6f0ff"
 
+<<<<<<< HEAD
     # Crear manual de usuario
     manual = ManualUsuario(pag)
 
+=======
+>>>>>>> 43c7fc2f9a9aeb882995d75329377dbebe45ca18
     # Encabezado
     title = ft.Container(
         content = ft.Text("SIMULADOR CNC", 
-                        color = "white", 
-                        font_family = "Press Start 2P",
-                        size = 60
+                          color = "white", 
+                          font_family = "Press Start 2P",
+                          size = 60
         ),
         height = 130,
         bgcolor = blue_1,
         alignment = ft.alignment.center
     )
 
-    
+    # Instancias de clases de objects
+
     # Campos de texto
     natural_tf = TextField("Lenguaje Natural", False) # Ingresar lenguaje natural
     gcode_tf = TextField("Codigo G", True) # Ver el GCode generado
     sheet_tf = TextField("Lámina", False) # Ingresar tamaño de lámina
 
     # Botones 
+<<<<<<< HEAD
     #vaciar
     stop_but = CircularButt(
     text="◻",
@@ -47,29 +56,19 @@ def mai(pag: ft.Page):
         text="?", 
         on_click=manual.open_manual  # ← activa el manual
     )
+=======
+    traductor_but = Button("Traducir", lambda e: natural_file(e, gcode_tf, natural_tf, pag)) # Traductor
+    copy_but = Button("Copiar", lambda e: copy_gcode(e, gcode_tf, pag)) # Copiar al portapapeles
+    stop_but = CircularButt("◻", print("Stop")) # Detener
+>>>>>>> 43c7fc2f9a9aeb882995d75329377dbebe45ca18
 
+    # Manual de usuario
+    manual = ManualUsuario(pag)
+    user_but = CircularButt("?", manual.open_manual)
 
-    # Traductor de lenguaje natural a GCode
-    traductor_but = ft.ElevatedButton(
-        on_click= lambda e: natural_file(e, gcode_tf, natural_tf, pag, sheet_tf),
-        text = "Traducir",
-        color = "white",
-        bgcolor = blue_1,
-        style = ft.ButtonStyle(
-            text_style = ft.TextStyle(font_family = "Space Mono")
-        )
-    )
+    img = ft.Image(width=600, height=400, fit=ft.ImageFit.FIT_HEIGHT)
+    start_but = CircularButt("▷", lambda e: graficar(e, img))
 
-    # Copia el GCode al portapapeles
-    copy_but = ft.ElevatedButton(
-        on_click = lambda e: copy_gcode(e, gcode_tf, pag),
-        text="Copiar",
-        color="white",
-        bgcolor=blue_1,
-        style=ft.ButtonStyle(
-            text_style=ft.TextStyle(font_family="Space Mono")
-        )
-    )
 
 
     traductor_zone = ft.Container(
@@ -87,11 +86,6 @@ def mai(pag: ft.Page):
         width=700,
     )
 
-
-    img = ft.Image(width=600, height=400, fit=ft.ImageFit.FIT_HEIGHT)
-
-    start_but = CircularButt(text="▷",on_click=lambda e: graficar(e, img))
-    
     # Zona superior de controles
     tool_zone = ft.Container(
         content=ft.Row(
@@ -142,5 +136,3 @@ def mai(pag: ft.Page):
             ]
         )
     )
-
-

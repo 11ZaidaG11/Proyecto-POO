@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 Ubicar: 40, 40
 Recta: 60, 60
 Arco antihorario: 40, 60; Centro: 50, 65
 Arco antihorario: 20, 60; Centro: 30, 65
 Recta: 40, 40
+=======
+Ubicar: 4, 5
+>>>>>>> 43c7fc2f9a9aeb882995d75329377dbebe45ca18

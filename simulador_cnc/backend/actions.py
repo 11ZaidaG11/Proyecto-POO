@@ -5,7 +5,35 @@ import matplotlib.pyplot as plt
 import io
 from matplotlib.backends.backend_agg import FigureCanvasAgg
 import base64
+<<<<<<< HEAD
 import asyncio
+=======
+from backend.modulo1 import Sheet
+
+
+def verification_sheet(sheet_tf: ft.TextField, pag):
+    text = sheet_tf.value.strip()
+
+    try:
+        # Extraer las dimensiones: "30, 60" → [30.0, 60.0]
+        w_str, h_str = text.split(",")
+        w = float(w_str)
+        h = float(h_str)
+
+        # Crear la lámina con esas dimensiones
+        sheet = Sheet(w, h)
+
+        # Verificar si está dentro del área de trabajo
+        if not sheet.is_in_bounds(work_area):
+            print("La lámina excede el tamaño permitido (300x200 mm)")
+        else:
+            print("Lámina válida")
+
+    except ValueError:
+        print("Error: Formato inválido. Usa el formato 'ancho, alto' (ej: 30, 60)")
+
+
+>>>>>>> 43c7fc2f9a9aeb882995d75329377dbebe45ca18
 
 
 class CNCMachine:
@@ -37,9 +65,9 @@ class CNCMachine:
 
 cnc=CNCMachine()
 # Crea un archivo de texto con el input de natural_tf
-def natural_file(e, gcode_tf, natural_tf, pag, sheet_tf):
+def natural_file(e, gcode_tf, natural_tf, pag):
     cont = natural_tf.value
-
+    """
     # Verifica que la lámina tenga el formato correcto ("ancho x alto")
     async def validar_datos():
         lamina_ingresada = sheet_tf.value.strip()
@@ -78,12 +106,20 @@ def natural_file(e, gcode_tf, natural_tf, pag, sheet_tf):
 
     if not validacion:
         return
-
+    """
     # Si todo está bien, continúa con la traducción
     cnc.load_natural_instructions(cont)
     gcode_tf.value = cnc.translate_to_gcode()
 
     print("natural file saved")
+<<<<<<< HEAD
+=======
+
+    traductor = Translator(naturalf, tool, g_file=GCodeFile())
+    gcode = traductor.translate()
+
+    gcode_tf.value = str(gcode)
+>>>>>>> 43c7fc2f9a9aeb882995d75329377dbebe45ca18
     print("Translated")
     print(gcode_tf.value)
     pag.update()
@@ -98,7 +134,11 @@ def graficar(e, image_control: ft.Image):
     tool.current_X = 0
     tool.current_y = 0
 
+<<<<<<< HEAD
     grapher = cnc.generate_grapher()
+=======
+    grapher = Grapher(GCodeFile(), tool)
+>>>>>>> 43c7fc2f9a9aeb882995d75329377dbebe45ca18
 
     # Crear figura de matplotlib
     fig, ax = plt.subplots(figsize=(10, 8), dpi=100)
