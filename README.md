@@ -173,4 +173,3 @@ flowchart TD
     n11@{ shape: rect}
     n15@{ shape: diam}
 ```
-## Diagrama de flujo `Grapher`
