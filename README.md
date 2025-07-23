@@ -8,14 +8,18 @@
 - Zaida Alejandra Guzmán Martínez  
 
 ### Contextualización
-Para comprender a cabalidad el proyecto es necesario conocer de antemano que es y para que se usa el CNC y el G-CODE.
+Para comprender a cabalidad el proyecto es necesario conocer de antemano que es y para que se usa el CNC y el G-code.
 
 El CNC (Control Numérico por Computadora) es un sistema que permite controlar con precisión la posición y el movimiento de elementos físicos mediante instrucciones codificadas. Este sistema se utiliza principalmente en procesos de mecanizado, como para controlar tornos CNC, fresadoras CNC o cortadoras láser, con el fin de fabricar piezas de manera eficiente y personalizada.
 
 Para que la máquina entienda qué acción debe ejecutar, se utiliza un lenguaje de programación llamado G-Code. Este lenguaje está compuesto por una serie de instrucciones estructuradas, está compuesto por comandos G (de movimiento) y comandos M (de funciones auxiliares). Estas acciones pueden incluir desplazamientos, cortes, perforaciones, entre otros.
 Cada línea de G-Code representa una orden específica y el conjunto de estas en un programa permite que la máquina realice el proceso completo de fabricación de una pieza. 
 
-### Diseño e implementación
+## Diseño e implementación
+### Planteamiento del problema
+Al hacer uso del CNC (Control Numérico por Computadora), la generación manual de G-code resulta ser uno de los mayores retos, ya que estos códigos suelen ser muy largos y por tanto el operario es muy propenso a equivocarse elaborandolos y un solo error de escritura o en las coordenadas puede llevar a que se dañe la lamina de trabajo o se haga una figura distinta a la deseasa, desperdiciando material y tiempo.
+Por esto, se coinsidera necesario contar con una herramienta como el Simulador de CNC 2D, que  permite que una persona que no sepa G-code escriba las instrucciones en lenguaje natural y estas sean posteriormente traducidas, ademas de permitir previsualizar gráficamente cómo quedará la lámina.
+### Solución implementada
 
 
 
