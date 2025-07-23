@@ -2,6 +2,7 @@ import re
 import matplotlib.pyplot as plt
 import numpy as np
 
+
 # El archivo con instrucciones en lenguaje natural
 class NaturalFile:
     name: str = "natural_file.txt"
@@ -18,7 +19,7 @@ class NaturalFile:
         with open(self.name, "w", encoding="utf-8") as nf:
             nf.write("")
 
-# El archivo con las instrucciones GCode
+# El archivo con las instrucciones G-Code
 class GCodeFile:
     name: str = "gcode_file.txt"
     
@@ -86,7 +87,10 @@ class Translator:
         nat_to_gc = "".join(lines)
         g_file.write_file(nat_to_gc)
         return g_file
-    
+
+g_file = GCodeFile()
+tool = CutterTool(0,0)
+
 class Grapher:
     # Posibles salidas del traductor de lenguaje natural a gcode
     mov_rapido = r"(G00) X(-?\d+(?:\.\d+)?) Y(-?\d+(?:\.\d+)?)"
@@ -94,7 +98,7 @@ class Grapher:
     mov_circ_h = r"(G02) X(-?\d+(?:\.\d+)?) Y(-?\d+(?:\.\d+)?) I(-?\d+(?:\.\d+)?) J(-?\d+(?:\.\d+)?)"
     mov_circi_antih = r"(G03) X(-?\d+(?:\.\d+)?) Y(-?\d+(?:\.\d+)?) I(-?\d+(?:\.\d+)?) J(-?\d+(?:\.\d+)?)"
 
-    def _init_(self, g_file: GCodeFile):
+    def __init__(self, g_file: GCodeFile):
         self.content = g_file.read_file()
         self.match0 = re.finditer(self.mov_rapido, self.content, re.MULTILINE)
         self.match1 = re.finditer(self.mov_lineal, self.content, re.MULTILINE)
@@ -122,30 +126,31 @@ class Grapher:
             puntos.append((x, y))
 
         for m in self.match2:
-            # Punto final del arco
+            #punto final del arco
             x = float(m.group(2))
             y = float(m.group(3))
-            # Centro relativo del arco
+            #centro relativo del arco
             I = float(m.group(4))
             J = float(m.group(5))
 
-            # Centro absoluto (se suman las coordenadas de la maquina a las del centro relativo ya que la maquina no siempre estara ubicada en 0)
+            #centro absoluto (se suman las coordenadas de la maquina a las del centro relativo ya que la maquina no siempre estara ubicada en 0)
             centro_x = tool.current_X + I
             centro_y = tool.current_y + J
 
-            r = np.sqrt(I*2 + J*2) # Radio del arco
+            #radio del arco
+            r = np.sqrt(I**2 + J**2)
 
-            # Angulo inicial y final (angulo de la maquina al punto inicial del arco y de la maquina al punto final respectivamente)
+            #anulo inicial y final (angulo de la maquina al punto inicial del arco y de la maquina al punto final respectivamente)
             angle_start = np.arctan2(tool.current_y - centro_y, tool.current_X - centro_x)
             angle_end = np.arctan2(y - centro_y, x - centro_x)
 
             if angle_end > angle_start:
                 angle_end -= 2 * np.pi
 
-            # 100 valores angulares entre el angulo inicial y final
+            #se generan 100 valores angulares entre el angulo inicial y final
             theta = np.linspace(angle_start, angle_end, 100)
 
-            # Puntos del arco (con la ecuacion parametrica de un circulo)
+            #puntos del arco (se usa la ecuacion parametrica de un circulo)
             x_arc = centro_x + r * np.cos(theta)
             y_arc = centro_y + r * np.sin(theta)
 
@@ -166,7 +171,7 @@ class Grapher:
             centro_y = tool.current_y + J
 
             #radio del arco
-            r = np.sqrt(I*2 + J*2)
+            r = np.sqrt(I**2 + J**2)
 
             #anulo inicial y final (angulo de la maquina al punto inicial del arco y de la maquina al punto final respectivamente)
             angle_start = np.arctan2(tool.current_y - centro_y, tool.current_X - centro_x)
@@ -194,6 +199,3 @@ class Grapher:
         y_range = (max(ys) - min(ys)) / 2 + 10
         ax.set_xlim(min(xs) - margin, max(xs) + margin)
         ax.set_ylim(min(ys) - margin, max(ys) + margin)
-
-g_file = GCodeFile()
-tool = CutterTool(0,0)

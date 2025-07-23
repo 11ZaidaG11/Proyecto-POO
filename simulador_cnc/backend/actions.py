@@ -1,10 +1,9 @@
-import flet as ft
-import io
-import base64
-import matplotlib.pyplot as plt
-from matplotlib.backends.backend_agg import FigureCanvasAgg
-
 from backend.modulo1 import NaturalFile, Translator, Grapher, GCodeFile, tool
+import flet as ft
+import matplotlib.pyplot as plt
+import io
+from matplotlib.backends.backend_agg import FigureCanvasAgg
+import base64
 
 # Crea un archivo de texto con el input de natural_tf
 def natural_file(e, gcode_tf, natural_tf, pag):
