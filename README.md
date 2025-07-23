@@ -111,7 +111,7 @@ direction TB
     class Grapher {
 	    - content
       - graph()
-      - _dibujar_arco
+      - dibujar_arco
     }
     class GCodeFile {
 	    - name: str
