@@ -1,5 +1,5 @@
 import flet as ft
-from backend.actions import natural_file, copy_gcode, graficar 
+from backend.actions import natural_file, copy_gcode, graficar, vaciar
 from frontend.objects import TextField, CircularButt
 from backend.actions import natural_file, copy_gcode
 from frontend.objects import TextField, CircularButt, Button
@@ -7,6 +7,7 @@ from frontend.objects import TextField, CircularButt, Button
 
 # Interfaz principal
 def mai(pag: ft.Page):
+
     # Colores
     blue_1 = "#004aad"
     blue_2 = "#50c0ff"
@@ -27,19 +28,24 @@ def mai(pag: ft.Page):
         alignment = ft.alignment.center
     )
 
+    
     # Campos de texto
     natural_tf = TextField("Lenguaje Natural", False) # Ingresar lenguaje natural
     gcode_tf = TextField("Codigo G", True) # Ver el GCode generado
     sheet_tf = TextField("Lámina", False) # Ingresar tamaño de lámina
 
     # Botones 
-    stop_but = CircularButt(text = "◻", on_click = print("Stop")) # Detener
+    #vaciar
+    stop_but = CircularButt(
+    text="◻",
+    on_click=lambda e: vaciar(e, natural_tf, gcode_tf, sheet_tf, pag)
+    ) 
     user_but = CircularButt(text = "?", on_click = print("help")) #! Manual
 
 
     # Traductor de lenguaje natural a GCode
     traductor_but = ft.ElevatedButton(
-        on_click= lambda e: natural_file(e, gcode_tf, natural_tf, pag),
+        on_click= lambda e: natural_file(e, gcode_tf, natural_tf, pag, sheet_tf),
         text = "Traducir",
         color = "white",
         bgcolor = blue_1,
@@ -130,3 +136,5 @@ def mai(pag: ft.Page):
             ]
         )
     )
+
+

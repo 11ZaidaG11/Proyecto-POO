@@ -173,3 +173,13 @@ class Grapher:
         ax.plot(x_arc, y_arc, 'r-')
         tool.current_X, tool.current_y = x, y
         puntos.append((x, y))
+
+class WorkArea:
+    def __init__(self, max_width: float, max_height: float):
+        self.max_width = max_width
+        self.max_height = max_height
+
+    def is_in_bounds(self, sheet_width: float, sheet_height: float) -> bool:
+        return sheet_width <= self.max_width and sheet_height <= self.max_height
+
+work_area = WorkArea(max_width=300, max_height=200)

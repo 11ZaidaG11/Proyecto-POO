@@ -1,8 +1,4 @@
-Ubicar: 60, 60
-Recta: 80, 60
-Recta: 70, 40
-Recta: 60, 60
-
-Ubicar: 60, 80
-Arco antihorario: 80, 80; Centro: 70, 90
-Arco antihorario: 60, 80; Centro: 70, 90
+Ubicar: 60, 60
+Recta: 80, 60
+Recta: 70, 40
+Recta: 60, 60
