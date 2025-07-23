@@ -15,6 +15,10 @@ El CNC (Control Numérico por Computadora) es un sistema que permite controlar c
 Para que la máquina entienda qué acción debe ejecutar, se utiliza un lenguaje de programación llamado G-Code. Este lenguaje está compuesto por una serie de instrucciones estructuradas, está compuesto por comandos G (de movimiento) y comandos M (de funciones auxiliares). Estas acciones pueden incluir desplazamientos, cortes, perforaciones, entre otros.
 Cada línea de G-Code representa una orden específica y el conjunto de estas en un programa permite que la máquina realice el proceso completo de fabricación de una pieza. 
 
+### Diseño e implementación
+
+
+
 ## ¿Qué hace el proyecto?
 ![](Imagenes/gui_2.jpg)
 
