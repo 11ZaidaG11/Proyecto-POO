@@ -135,3 +135,37 @@ direction TB
     Grapher --> GCodeFile
     
 ```
+```mermaid
+flowchart TD
+    A(["Inicio"]) --> n17@{ label: "Crear archivo gcode_file.txt<br style=\"--tw-scale-x:\">" }
+    C["Grupo 1:<br>¿ubicar o recta?"] -- Ubicar --> n1["G01"]
+    C -- Recta --> n2["G02"]
+    D["Grupo 1:<br>¿Arco horario o <br>antihoraio?"] -- Horario --> n3["G03"]
+    D -- Antihorario --> n4["G04"]
+    n6@{ label: "X = Grupo 2<br style=\"--tw-scale-x:\">Y = Grupo 3<br>" } --> n11@{ label: "preI = Grupo 4<br style=\"--tw-scale-x:\">preJ = Grupo 5" }
+    n1 --> n5["X = Grupo 2<br>Y = Grupo 3"]
+    n2 --> n5
+    n7["Construir traducción"] --> n8["G00 X00 YOO"]
+    n3 --> n6
+    n9["Construir traducción"] --> n10["G00 X00 YOO I00 JOO"]
+    n4 --> n6
+    B{"¿Patron 1 o 2?"} -- 1 --> C
+    B -- 2 --> D
+    n5 --> n7
+    n11 --> n13["I=Posición herramienta-preI<br>J=Posición herramienta-preJ"]
+    n13 --> n9
+    n14["Por cada línea en natural_file.txt"] --> B
+    n8 --> n19["Guardar en gcode_file.txt"]
+    n10 --> n19
+    n15["¿Hay más líneas en<br>natural_file.txt?"] -- No --> n16(["Fin"])
+    n15 -- Si --> n14
+    n17 --> n18["Leer natural_file.txt"]
+    n19 --> n15
+    n18 --> n14
+    n17@{ shape: rect}
+    C@{ shape: diam}
+    D@{ shape: diam}
+    n6@{ shape: rect}
+    n11@{ shape: rect}
+    n15@{ shape: diam}
+```
