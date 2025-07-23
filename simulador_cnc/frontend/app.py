@@ -37,7 +37,7 @@ def mai(pag: ft.Page):
 
     # Botones 
     stop_but = CircularButt(text = "◻", on_click = print("Stop")) # Detener
-    user_but = CircularButt(text = "?", on_click = print("help")) #! Manual
+    user_but = CircularButt(text = "?", on_click = manual.open_manual) # Manual
 
 
     # Traductor de lenguaje natural a GCode
