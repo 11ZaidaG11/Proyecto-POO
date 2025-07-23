@@ -135,6 +135,7 @@ direction TB
     Grapher --> GCodeFile
     
 ```
+## Diagrama de flujo `Translator`
 ```mermaid
 flowchart TD
     A(["Inicio"]) --> n17@{ label: "Crear archivo gcode_file.txt<br style=\"--tw-scale-x:\">" }
